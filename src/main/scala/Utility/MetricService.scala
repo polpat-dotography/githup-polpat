@@ -24,4 +24,18 @@ object MetricService {
     case "km" => Math.pow(10,km)
   }
 
+  def getRandomNumberRange(numDigit: Int):Int = {
+    var result:String = ""
+    for(i <- 0 to numDigit-1)
+    {
+      val ranNum = randomPoint(0,9)
+      result += ranNum.toString
+    }
+    return result.toInt
+  }
+
+  def randomPoint(min: Int, max: Int):Int = {
+    Math.floor(min+(Math.random()*(max-min+1))).toInt
+  }
+
 }
