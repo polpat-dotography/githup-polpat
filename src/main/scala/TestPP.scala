@@ -14,6 +14,7 @@ object TestCC extends App{
   println("b : " + b + " : " + b.name)
 
   println(new Date().getTime)
+  println(0 until 4)
 
   def toUpper(user: user): String =
   {
