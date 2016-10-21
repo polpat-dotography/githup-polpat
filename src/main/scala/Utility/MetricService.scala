@@ -3,6 +3,9 @@ package Utility
 /**
   * Created by polpat on 14/7/2559.
   */
+
+import java.util.Date
+
 object MetricService {
   val um = -6
   val mm = -3
@@ -36,6 +39,10 @@ object MetricService {
 
   def randomPoint(min: Int, max: Int):Int = {
     Math.floor(min+(Math.random()*(max-min+1))).toInt
+  }
+
+  def randomName(key: String): String = {
+    key + "_" + new Date().getTime
   }
 
 }

@@ -46,7 +46,6 @@ object testImage extends App {
 
         val cList = getColorValue(r,g,b,"gray")
 
-        //println("new : "+newRGB)
 
         val newRGB = (a<<24) | (cList(0)<<16) | (cList(1)<<8) | cList(2)
         out.setRGB(x, y, newRGB)
@@ -130,7 +129,7 @@ object testImage extends App {
   //merge image
 
 
-  ImageIO.write(photo2, "png", new File("/home/polpat/pic/test" + getRandomNumberRange(3) +".png"))
+  ImageIO.write(photo2, "png", new File("/home/polpat/pic/" + randomName("pae") + ".png"))
 
 
 }
