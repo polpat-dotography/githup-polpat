@@ -24,8 +24,9 @@ object testImage extends App {
   val f3 = "/home/polpat/pic/004.jpg"
 
   val fp1 = "D:/Picture/01/12991022_777732232357413_473763123432125400_n.jpg"
+  val fp2 = "D:/Picture/01/o5yojzkhml1ZPbnRYw2-o.jpg"
 
-  val photo1 = fp1
+  val photo1 = fp2
   val overlay = f2
 
 
@@ -39,20 +40,27 @@ object testImage extends App {
 
   //val photo2 = mergeImage(apply(f1), apply(f2))
 
-  var photo2 = concatImage(List(photo1,photo1,photo1,photo1), effectList, 3, 2, 400, 300)
-  photo2 = waterMark(photo2, "@polpat")
+//  var photo2 = concatImage(List(photo1,photo1,photo1,photo1), effectList, 3, 2, 400, 300)
+//  photo2 = waterMark(photo2, "@polpat")
 
   //val photo2 = borderOutImage(apply(photo1), 2, 2)
 
+  //val photo2 = getBinaryAuto(apply(photo1))
+  val photo3 = photoEffect(apply(photo1), "binary")
+
   // write file in function
-//  writeFile = false
+   // writeFile = false
 //  val photo2 = splitImage(apply(photo1), 400, 400, rootPath)
+
+
+
 
 
 
   //write image
   if(writeFile) {
-    ImageIO.write(photo2, "png", new File(rootPath + randomName("pae") + ".png"))
+    //ImageIO.write(photo2, "png", new File(rootPath + randomName("pae") + ".png"))
+    ImageIO.write(photo3, "png", new File(rootPath + randomName("pae-old") + ".png"))
   }
 
 

@@ -11,6 +11,7 @@ import MetricService._
   * Created by OS on 22-Oct-16.
   */
 object ImageHelper {
+
   def photoEffect(img: BufferedImage, effect: String): BufferedImage = {
     // obtain width and height of image
     val w = img.getWidth
@@ -93,14 +94,59 @@ object ImageHelper {
     imgNew
   }
 
-  def getBinary(color:Int, threshold:Int):Int = {
+  def getBinaryAuto(img: BufferedImage):BufferedImage = {
+    val w = img.getWidth
+    val h = img.getHeight
+    val out = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)
+    var count: BigDecimal = 0
+    for (x <- 0 until w) {
+      for (y <- 0 until h) {
+        val p = img.getRGB(x, y)
+        val a = (p>>24)&0xff
+        var r = (p>>16)&0xff
+        var g = (p>>8)&0xff
+        var b = p&0xff
+
+        if(r > 127) r = 1 else r = 0
+        if(g > 127) g = 1 else g = 0
+        if(r > 127) b = 1 else b = 0
+
+        val bValue = (r + g + b) match {
+          case x if x > 1 => 255
+          case _  => 0
+        }
+
+        val newRGB = (a<<24) | (bValue<<16) | (bValue<<8) | bValue
+        out.setRGB(x, y, newRGB)
+      }
+    }
+    out
+  }
+  
+  def getBinary(red: Int, green: Int, blue: Int, threshold: Int): List[Int] = {
+    var r = red
+    var g = green
+    var b = blue
+    if(r > 0) r = 1 else r = 0
+    if(g > threshold) g = 1 else g = 0
+    if(r > threshold) b = 1 else b = 0
+
+    val bValue = r + g + b match {
+      case x if x > 1 => 255
+      case _  => 0
+    }
+    List(bValue, bValue, bValue)
+  }
+  
+  def getBinary(color:Int, threshold:Int): Int = {
     if(color > threshold) {255} else {0}
   }
+
   def getColorValue(red:Int, green:Int, blue:Int, cat:String):List[Int] = {
-    val threshold = 80
+    val threshold = 140
     cat match {
       case "default" => List(red,green,blue)
-      case "binary" => List(getBinary(red,threshold),getBinary(red,threshold),getBinary(red,threshold))
+      case "binary" => getBinary(red, green, blue, threshold)
       case "gray" => List(red,red,red)
       case "inverse" => List(255-red,255-green,255-blue)
       case "inverseR" => List(255-red,green,blue)
