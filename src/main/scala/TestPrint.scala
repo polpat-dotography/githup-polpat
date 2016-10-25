@@ -3,7 +3,9 @@ import java.util.Date
 /**
   * Created by polpat on 21/10/2559.
   */
-object TestCC extends App{
+import Utility.FancyLog._
+
+object TestCC extends App {
 
   case class user(name: String , lastName: String, age: Int = 25)
 

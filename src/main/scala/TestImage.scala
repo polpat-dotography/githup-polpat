@@ -17,7 +17,7 @@ object testImage extends App {
   var rootU = "/home/polpat/pic/"
   var rootW = "D:/Picture/scala/"
 
-  val rootPath = rootW
+  val rootPath = rootU
 
   val f1 = "/home/polpat/pic/Pentagon_shape_black2.png"
   val f2 = "/home/polpat/pic/flame_PNG13218.png"
@@ -26,12 +26,13 @@ object testImage extends App {
   val fp1 = "D:/Picture/01/12991022_777732232357413_473763123432125400_n.jpg"
   val fp2 = "D:/Picture/01/o5yojzkhml1ZPbnRYw2-o.jpg"
 
-  val photo1 = fp2
-  val overlay = f2
+  val photo1 = f1
+  val overlay = f1
 
 
   // set list of path/effect
-  val effectList = List("default", "gray", "inverse", "red", "green", "blue")
+  val effectDefaul = List("default")
+  val effectList = List("default", "gray", "inverse", "red", "green", "blue", "bright", "dark")
 
 
   // make photo effect
@@ -40,17 +41,18 @@ object testImage extends App {
 
   //val photo2 = mergeImage(apply(f1), apply(f2))
 
-//  var photo2 = concatImage(List(photo1,photo1,photo1,photo1), effectList, 3, 2, 400, 300)
+//  var photo2 = concatImage(apply(List(photo1,photo1,photo1,photo1)), effectList, 3, 2, 400, 300)
 //  photo2 = waterMark(photo2, "@polpat")
 
   //val photo2 = borderOutImage(apply(photo1), 2, 2)
 
   //val photo2 = getBinaryAuto(apply(photo1))
-  val photo3 = photoEffect(apply(photo1), "binary")
+  //val photo3 = photoEffect(apply(photo1), "binary")
 
   // write file in function
-   // writeFile = false
-//  val photo2 = splitImage(apply(photo1), 400, 400, rootPath)
+  //writeFile = false
+//  val photo2 = splitImage(apply(photo1), effectList, 128, 128, rootPath)
+  val photo2 = splitEffect(apply(photo1), effectList, 64, 128, rootPath)
 
 
 
@@ -59,8 +61,8 @@ object testImage extends App {
 
   //write image
   if(writeFile) {
-    //ImageIO.write(photo2, "png", new File(rootPath + randomName("pae") + ".png"))
-    ImageIO.write(photo3, "png", new File(rootPath + randomName("pae-old") + ".png"))
+    ImageIO.write(photo2, "png", new File(rootPath + randomName("pae") + ".png"))
+    //ImageIO.write(photo3, "png", new File(rootPath + randomName("pae-old") + ".png"))
   }
 
 

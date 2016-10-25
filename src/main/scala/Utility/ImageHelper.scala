@@ -193,7 +193,7 @@ object ImageHelper {
     combined
   }
 
-  def concatImage(image: List[String], effect: List[String], row: Int, col: Int, itemWidth: Int, itemHeight: Int): BufferedImage = {
+  def concatImage(image: List[BufferedImage], effect: List[String], row: Int, col: Int, itemWidth: Int, itemHeight: Int): BufferedImage = {
     val size = row * col
     val width = itemWidth * row
     val height = itemHeight * col
@@ -204,7 +204,7 @@ object ImageHelper {
     var indexImage, indexEffect = 0
 
     for(i <- 0 until size) {
-      var bi = ImageIO.read(new File(image(indexImage)))
+      var bi = image(indexImage)
 
       bi = resizeImage(bi, itemWidth, itemHeight)
       bi = photoEffect(bi, effect(indexEffect))
@@ -258,14 +258,43 @@ object ImageHelper {
     img
   }
 
-  def splitImage(srcImg: BufferedImage, width: Int, height: Int, rootPath: String): BufferedImage = {
+  def splitImage(srcImg: BufferedImage, effect: List[String] = List("default"), width: Int, height: Int, rootPath: String): BufferedImage = {
     val source = srcImg
+    var indexEffect = 0
     for (i <- 0 until source.getHeight by height) {
-      for(j <- 0 until source.getWidth by width)
-        writeImage(source.getSubimage(j, i, setSizeSplit(width, j, srcImg.getWidth), setSizeSplit(height, i, srcImg.getHeight)), "png", rootPath + randomName("pae") + ".png")
+      for(j <- 0 until source.getWidth by width) {
+        val effectImage = photoEffect(source, effect(indexEffect))
+        indexEffect += 1
+        writeImage(effectImage.getSubimage(j, i, setSizeSplit(width, j, srcImg.getWidth), setSizeSplit(height, i, srcImg.getHeight)), "png", rootPath + randomName("pae") + ".png")
+        if(indexEffect >= effect.length) {
+          indexEffect = 0
+        }
+      }
     }
     srcImg
   }
+
+  def splitEffect(srcImg: BufferedImage, effect: List[String] = List("default"), width: Int, height: Int, rootPath: String): BufferedImage = {
+    val source = srcImg
+    var indexEffect = 0
+    val result = new BufferedImage(srcImg.getWidth, srcImg.getHeight, //work these out
+      BufferedImage.TYPE_INT_RGB)
+    val g = result.getGraphics
+
+    for (i <- 0 until source.getHeight by height) {
+      for(j <- 0 until source.getWidth by width) {
+        val effectImage = photoEffect(source, effect(indexEffect))
+        indexEffect += 1
+        g.drawImage(effectImage.getSubimage(j, i, setSizeSplit(width, j, srcImg.getWidth), setSizeSplit(height, i, srcImg.getHeight)), j, i, null)
+        if(indexEffect >= effect.length) {
+          indexEffect = 0
+        }
+      }
+    }
+    result
+  }
+
+
 
   def setSizeSplit(itemSize: Int, current: Int, border:Int): Int = {
     printlnC("border : " + border + " current : " + current + " itemsize : " + itemSize )
@@ -283,4 +312,5 @@ object ImageHelper {
 
   def apply(path: String): BufferedImage = ImageIO.read(new File(path))
   def apply(img: BufferedImage) = img
+  def apply(img: List[String]): List[BufferedImage] = img map { x => apply(x) }
 }

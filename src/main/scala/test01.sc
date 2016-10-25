@@ -2,6 +2,11 @@ import java.util.Date
 
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result
 
+
+//def multiply(m:Int)(n:Int):Int = m*n
+//implicit val k = 10
+//val j = multiply(4)
+
 //def makeUpper(xs: List[String]) = xs map {
 //  _.toUpperCase
 //}
@@ -108,10 +113,6 @@ import com.sun.corba.se.spi.orbutil.fsm.Guard.Result
 //}
 //val b = optMatch(Option("a"))
 
-
-//def multiply(m:Int)(n:Int):Int = m*n
-//implicit val k = 10
-//val j = multiply(4)
 
 //val f = getFac(600)
 //def getFac(n:BigInt, result:BigInt = 1):BigInt = {
