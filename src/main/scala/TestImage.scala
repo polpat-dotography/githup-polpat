@@ -25,8 +25,9 @@ object testImage extends App {
 
   val fp1 = "D:/Picture/01/12991022_777732232357413_473763123432125400_n.jpg"
   val fp2 = "D:/Picture/01/o5yojzkhml1ZPbnRYw2-o.jpg"
+  val fp3 = "D:/Picture/01/397vv.png"
 
-  val photo1 = fp2
+  val photo1 = fp3
   val overlay = f2
 
 
@@ -46,7 +47,8 @@ object testImage extends App {
   //val photo2 = borderOutImage(apply(photo1), 2, 2)
 
   //val photo2 = getBinaryAuto(apply(photo1))
-  val photo3 = photoEffect(apply(photo1), "binary")
+  //val photo3 = photoEffect(apply(photo1), "binary")
+  val photo2 = getBinaryDiffusion(apply(photo1))
 
   // write file in function
    // writeFile = false
@@ -59,8 +61,8 @@ object testImage extends App {
 
   //write image
   if(writeFile) {
-    //ImageIO.write(photo2, "png", new File(rootPath + randomName("pae") + ".png"))
-    ImageIO.write(photo3, "png", new File(rootPath + randomName("pae-old") + ".png"))
+    ImageIO.write(photo2, "png", new File(rootPath + randomName("bb") + ".png"))
+    //ImageIO.write(photo3, "png", new File(rootPath + randomName("bbc") + ".png"))
   }
 
 

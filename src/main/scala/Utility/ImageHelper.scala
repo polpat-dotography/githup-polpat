@@ -94,6 +94,62 @@ object ImageHelper {
     imgNew
   }
 
+  def getBinaryDiffusion(img: BufferedImage): BufferedImage = {
+    val w = img.getWidth
+    val h = img.getHeight
+    //var out = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)
+    //out = photoEffect(img, "default")
+    //result = photoEffect(img, "gray")
+    for (y <- 1 until (h - 1)) {
+      for (x <- 0 until (w - 1)) {
+        val p = img.getRGB(x, y)
+        val alpha = (p>>24)&0xff
+
+
+        var a: Int = 0
+        val tmp: Int = img.getRGB(x,y)&0xff
+        //printlnC("tmp : " + tmp)
+        var bValue:Int = img.getRGB(x,y)&0xff match {case k if k < 128 => 0 case _ => 255}
+
+        //printlnG("bvalue : " + bValue)
+
+        a = tmp - (255 *(img.getRGB(x,y)&0xff match {case 255 => 1 case _ => 0}))
+        bValue = (a * 7 / 16).toInt
+
+        //printlnG("bvalue : " + bValue)
+
+
+        printlnM("a : " + a)
+
+
+
+        img.setRGB(x, y + 1, (alpha<<24) | (bValue<<16) | (bValue<<8) | bValue)
+
+        bValue = (a * 3 / 16).toInt
+        img.setRGB(x + 1, y - 1, (alpha<<24) | (bValue<<16) | (bValue<<8) | bValue)
+
+        bValue = (a * 5 / 16).toInt
+        img.setRGB(x + 1, y, (alpha<<24) | (bValue<<16) | (bValue<<8) | bValue)
+
+        bValue = (a / 16). toInt
+        img.setRGB(x + 1, y + 1, (alpha<<24) | (bValue<<16) | (bValue<<8) | bValue)
+
+
+      }
+    }
+
+    for (m <- 1 until w) {
+      for (n <- 0 until h) {
+        val p = (img.getRGB(m, n)&0xff)
+        val alpha = (p>>24)&0xff
+        val cValue = p match { case x if x < 128 => 0 case _ => 255}
+        img.setRGB(m , n , (alpha<<24) | (cValue.toInt<<16) | (cValue.toInt<<8) | cValue.toInt)
+      }
+    }
+
+    img
+  }
+
   def getBinaryAuto(img: BufferedImage):BufferedImage = {
     val w = img.getWidth
     val h = img.getHeight
