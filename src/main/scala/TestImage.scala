@@ -49,7 +49,7 @@ object testImage extends App {
 
   //val photo2 = getBinaryAuto(apply(photo1))
   //val photo3 = photoEffect(apply(photo1), "binary")
-  val photo2 = getBinaryDiffusion(apply(photo1))
+  //val photo2 = getBinaryDiffusion(apply(photo1))
 
   // write file in function
   //writeFile = false

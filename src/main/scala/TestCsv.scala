@@ -2,6 +2,7 @@
   * Created by polpat on 25/10/2559.
   */
 import Utility.FancyLog._
+
 object TestCsv extends App {
 
   case class PersonData(name: String, age: String, sex: String)
@@ -9,7 +10,7 @@ object TestCsv extends App {
   var size = 0
 
   println("Month, Income, Expenses, Profit")
-  val bufferedSource = io.Source.fromFile("/home/polpat/testfile/file1.csv")
+  val bufferedSource = scala.io.Source.fromFile("/home/polpat/testfile/file1.csv")
   for (line <- bufferedSource.getLines) {
     val cols = line.split(",").map(_.trim).toList
     // do whatever you want with the columns here
